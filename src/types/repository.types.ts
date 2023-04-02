@@ -8,3 +8,8 @@ export interface Repository {
   stargazers_count: number
   language: string
 }
+export interface WeeklyCommitActivity {
+  days: number[]
+  total: number
+  week: number
+}

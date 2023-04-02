@@ -1,15 +1,10 @@
-import { useState } from 'react'
-import { useQuery } from 'react-query'
 import { Box, Tabs, Tab, Container, Skeleton } from '@mui/material'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
-import RepositoriesService from '../api/RepositoriesService'
-import FetchAdapter from '../api/FetchAdapter'
 import type { LanguageFilter as languageFilterType } from '../types/languageFilter.types'
 import { languageFilter as languageFilterConst } from '../constants/languageFilter.constants'
-
-const repositoriesService = new RepositoriesService(new FetchAdapter())
+import { useTopRepositoriesByStars } from '../hooks/useTopRepositoriesByStars'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -27,14 +22,7 @@ export const options = {
 }
 
 export default function RepositoriesData(): JSX.Element {
-  const [languageFilter, setLanguageFilter] = useState<languageFilterType>(languageFilterConst.ALL)
-  const { isLoading, data } = useQuery(
-    ['repositories', languageFilter],
-    async () => await repositoriesService.getTopRepositoriesByStars({ languageFilter }),
-    {
-      staleTime: 60000,
-    }
-  )
+  const { data, isLoading, languageFilter, setLanguageFilter } = useTopRepositoriesByStars()
 
   const chartData = {
     labels: data?.data.items.map((item) => item.full_name),
@@ -42,6 +30,7 @@ export default function RepositoriesData(): JSX.Element {
       {
         label: 'Stars',
         data: data?.data.items.map((item) => item.stargazers_count),
+        borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
@@ -52,7 +41,7 @@ export default function RepositoriesData(): JSX.Element {
   }
 
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='lg' sx={{ marginTop: '2rem' }}>
       <Box sx={{ width: '100%' }}>
         <Tabs
           value={languageFilter}
@@ -60,6 +49,7 @@ export default function RepositoriesData(): JSX.Element {
           textColor='secondary'
           indicatorColor='secondary'
           aria-label='secondary tabs example'
+          sx={{ color: 'red' }}
         >
           <Tab value={languageFilterConst.ALL} label='All' />
           <Tab value={languageFilterConst.JAVASCRIPT} label='JavaScript' />

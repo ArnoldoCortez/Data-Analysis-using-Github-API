@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-import './index.css'
-import App from './App'
+import './index.scss'
 import RepositoriesData from './pages/RepositoriesData'
 import ReactRepositoryData from './pages/ReactRepositoryData'
 import ErrorPage from './pages/ErrorPage'
+import App from './App'
 
 const queryClient = new QueryClient()
 

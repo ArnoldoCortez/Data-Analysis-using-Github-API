@@ -4,12 +4,19 @@ import CustomHttpResponse from './CustomHttpResponse'
 
 class FetchAdapter implements CustomHttpClient {
   public async get<Data>(customHttpRequest: CustomHttpRequest): Promise<CustomHttpResponse<Data>> {
-    const response = await fetch(customHttpRequest.path)
-    const data = await response.json()
+    let response: Response
 
-    // if (response.status !== 200) {
-    //   throw new Error('Unexpected Server Error')
-    // }
+    try {
+      response = await fetch(customHttpRequest.path)
+    } catch (error) {
+      throw new Error('Sorry, there was an unexpecteted server error')
+    }
+
+    if (!response.ok) {
+      throw new Error(`Sorry there was a ${response.status} error`)
+    }
+
+    const data = await response.json()
 
     return new CustomHttpResponse(data, response.status)
   }
