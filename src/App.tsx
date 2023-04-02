@@ -1,23 +1,15 @@
-import { useEffect } from 'react'
-import './App.css'
-import SearchRepositoriesService from './api/SearchRepositoriesService'
-import FetchAdapter from './api/FetchAdapter'
+import CssBaseline from '@mui/material/CssBaseline'
+import Navbar from './components/Navbar/Navbar'
+import { Outlet } from 'react-router-dom'
 
 function App(): JSX.Element {
-  useEffect(() => {
-    const searchRepositoriesService = new SearchRepositoriesService(new FetchAdapter())
-
-    searchRepositoriesService
-      .getTopRepositoriesByStars({})
-      .then((response) => {
-        const data = response.data
-        console.log(data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
-  return <div className='App'>Hello World!!</div>
+  return (
+    <>
+      <CssBaseline />
+      <Navbar />
+      <Outlet />
+    </>
+  )
 }
 
 export default App

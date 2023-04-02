@@ -5,9 +5,9 @@ import { languageFilter as languageFilterConst } from '../constants/languageFilt
 import type { RepositoriesSearch } from '../types/repository.types'
 import type { LanguageFilter } from '../types/languageFilter.types'
 
-const PUBLIC_URL = 'https://api.github.com/search/repositories'
+const PUBLIC_URL = 'https://api.github.com'
 
-class SearchRepositoriesService {
+class RepositoriesService {
   constructor(private readonly customHttpAdapter: CustomHttpClient) {}
 
   public async getTopRepositoriesByStars({
@@ -24,10 +24,17 @@ class SearchRepositoriesService {
       page: '1',
     }).toString()
     const customHttpResponse = this.customHttpAdapter.get<RepositoriesSearch>(
-      new CustomHttpRequest(`${PUBLIC_URL}?${searchParams}`)
+      new CustomHttpRequest(`${PUBLIC_URL}/search/repositories?${searchParams}`)
+    )
+    return await customHttpResponse
+  }
+
+  public async getReactWeeklyCommitActivity(): Promise<CustomHttpResponse> {
+    const customHttpResponse = this.customHttpAdapter.get(
+      new CustomHttpRequest(`${PUBLIC_URL}/repos/facebook/react/stats/commit_activity`)
     )
     return await customHttpResponse
   }
 }
 
-export default SearchRepositoriesService
+export default RepositoriesService

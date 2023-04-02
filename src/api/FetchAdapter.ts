@@ -7,6 +7,10 @@ class FetchAdapter implements CustomHttpClient {
     const response = await fetch(customHttpRequest.path)
     const data = await response.json()
 
+    // if (response.status !== 200) {
+    //   throw new Error('Unexpected Server Error')
+    // }
+
     return new CustomHttpResponse(data, response.status)
   }
 }
