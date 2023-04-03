@@ -81,6 +81,10 @@
             border-radius: 12px;
             transition: 0.3s ease all;
 
+            &.active {
+              background: rgba(#fff, 0.1);
+            }
+
             &:hover {
               background: rgba(#fff, 0.1);
             }

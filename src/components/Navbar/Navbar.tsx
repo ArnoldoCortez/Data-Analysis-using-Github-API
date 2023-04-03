@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { AiOutlineClose } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './navbar.scss'
 
 function Navbar(): JSX.Element {
@@ -44,10 +44,14 @@ function Navbar(): JSX.Element {
         >
           <ul>
             <li>
-              <Link to='/'>Top 20 Repositories</Link>
+              <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : '')}>
+                Top 20 Repositories
+              </NavLink>
             </li>
             <li>
-              <Link to='/react-commits'>React Commit Activity</Link>
+              <NavLink to='/react-commits' className={({ isActive }) => (isActive ? 'active' : '')}>
+                React Commit Activity
+              </NavLink>
             </li>
           </ul>
         </nav>
