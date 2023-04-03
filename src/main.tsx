@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import './index.scss'
 import RepositoriesData from './pages/RepositoriesData'
-import ReactRepositoryData from './pages/ReactRepositoryData'
-import ErrorPage from './pages/ErrorPage'
 import App from './App'
+
+const ReactRepositoryData = lazy(async () => await import('./pages/ReactRepositoryData'))
+const ErrorPage = lazy(async () => await import('./pages/ErrorPage'))
 
 const queryClient = new QueryClient()
 
