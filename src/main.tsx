@@ -4,9 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import './index.scss'
-import RepositoriesData from './pages/RepositoriesData'
 import App from './App'
 
+const RepositoriesData = lazy(async () => await import('./pages/RepositoriesData'))
 const ReactRepositoryData = lazy(async () => await import('./pages/ReactRepositoryData'))
 const ErrorPage = lazy(async () => await import('./pages/ErrorPage'))
 
