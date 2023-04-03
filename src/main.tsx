@@ -1,7 +1,8 @@
-import React, { lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { CircularProgress } from '@mui/material'
 
 import './index.scss'
 import App from './App'
@@ -16,15 +17,27 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Suspense fallback={<CircularProgress color='secondary' />}>
+        <ErrorPage />
+      </Suspense>
+    ),
     children: [
       {
         path: '/',
-        element: <RepositoriesData />,
+        element: (
+          <Suspense fallback={<CircularProgress color='secondary' />}>
+            <RepositoriesData />,
+          </Suspense>
+        ),
       },
       {
         path: 'react-commits',
-        element: <ReactRepositoryData />,
+        element: (
+          <Suspense fallback={<CircularProgress color='secondary' />}>
+            <ReactRepositoryData />
+          </Suspense>
+        ),
       },
     ],
   },
